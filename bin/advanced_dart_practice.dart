@@ -87,7 +87,12 @@ Result<String> doTheWork3() {
   return Result('중요한 데이터');
 }
 
+/////////////////////////////////////////////////////
 
+/// Method Generic
+Result doTheWork4<Result extends Animal>(Result Function() animalCreator){
+  return animalCreator();
+}
 ////////////////////////////////////////////////////////////////////////////
 
 /// TestList
@@ -239,11 +244,12 @@ void practice4_toSet() {
 
 void practice5_generic(){
   /// class generic
-
-
   final result = doTheWork();
-  /// method or function generic
+  final result2 = doTheWork2();
 
+  /// method or function generic
+  final result3 = doTheWork4<Duck>(() => Duck());
+  result3.walk();
 }
 
 main() {
