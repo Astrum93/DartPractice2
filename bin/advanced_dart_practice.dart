@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:io';
 import 'extention/collection_extention.dart';
 
 ////////////////////////////////////////////////////////////////////////////
@@ -134,7 +135,7 @@ class AsyncWalk extends goToWalkInterface {
 }
 
 ////////////////////////////////////////////////////////////////////////////
-/// Stream
+/// Stream(Generator)
 
 void addDataToTheSink(StreamController<int> controller) async{
   for(int i=1; i <= 4; i++){
@@ -164,6 +165,37 @@ Stream<int> countStreamForError(int max) async* {
   }
 }
 
+////////////////////////////////////////////////////////////////////////////
+/// Iterable(Generator)
+
+Iterable<String> makeIterable(int max) sync* {
+  for (int i = 1; i <= max; i++) {
+    // sleep은 현업에서 절대 쓰지 말것. 메인 쓰레드를 중지시킴.
+    //sleep(Duration(seconds: 1));
+    yield i.toString();
+  }
+  yield '완료되었습니다.';
+}
+
+Iterable<String> makeIterable2(int max) sync* {
+  for (int i = 1; i <= max; i++) {
+    // sleep은 현업에서 절대 쓰지 말것. 메인 쓰레드를 중지시킴.
+    //sleep(Duration(seconds: 1));
+    yield i.toString();
+  }
+  yield*  ['one' , 'two', 'three', 'four'];
+  yield '완료되었습니다.';
+}
+
+/// Stream(Generator)
+Stream<String> countStream2(int max) async* {
+  for (int i = 1; i <= max; i++) {
+    await sleepAsync(Duration(seconds: 1));
+    yield i.toString();
+  }
+  yield '완료되었습니다.';
+  yield* countStream2(max);
+}
 //*************************************************************************//
 
 /// TestList
@@ -418,7 +450,7 @@ print(e.toString());
 });
 }
 
-void practice8_Iterable() {
+void practice8_Iterable() async{
   /// List와 Iterable
   final List list = ['blue' , 'yellow', 'red'];
   // final iterator = list.iterator;
@@ -428,20 +460,31 @@ void practice8_Iterable() {
   // print(iterator.current);
   // };
 
-  // iterable은 순서가 있는 객체
-  list.forEach((element) {
-    print(element);
-  });
-
-  for(final color in list){
-    print(color);
-  }
+  /// iterable은 순서가 있는 객체
+  // list.forEach((element) {
+  //   print(element);
+  // });
+  //
+  // for(final color in list){
+  //   print(color);
+  // }
 
   /// sync*로 Iterable 만들기
+  // for (final message in makeIterable(5)){
+  //   print(message);
+  // }
 
   /// async*로 Stream 만들기
 
   /// yield*를 통해서 Iterable & Stream 연장시키기
+  // for (final message in makeIterable2(4)){
+  //   print(message);
+  // }
+
+  await for (final message in countStream2(3)){
+    print(message);
+  }
+
 }
 
 main() {
@@ -467,5 +510,5 @@ main() {
   //practice7_Stream();
 
   /// Iterable practice
-  practice8_Iterable();
+  //practice8_Iterable();
 }
