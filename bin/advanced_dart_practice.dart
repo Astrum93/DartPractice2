@@ -418,6 +418,32 @@ print(e.toString());
 });
 }
 
+void practice8_Iterable() {
+  /// List와 Iterable
+  final List list = ['blue' , 'yellow', 'red'];
+  // final iterator = list.iterator;
+  //
+  // print(iterator.current);
+  // while (iterator.moveNext()){
+  // print(iterator.current);
+  // };
+
+  // iterable은 순서가 있는 객체
+  list.forEach((element) {
+    print(element);
+  });
+
+  for(final color in list){
+    print(color);
+  }
+
+  /// sync*로 Iterable 만들기
+
+  /// async*로 Stream 만들기
+
+  /// yield*를 통해서 Iterable & Stream 연장시키기
+}
+
 main() {
   /// class practice
   //practice1_Class();
@@ -438,5 +464,8 @@ main() {
   //practice6_Future();
 
   /// Stream practice
-  practice7_Stream();
+  //practice7_Stream();
+
+  /// Iterable practice
+  practice8_Iterable();
 }
