@@ -514,7 +514,7 @@ void practice8_Iterable() async{
 
 }
 
-void practice9_Lamda() {
+void practice9_Lambda() {
   /// 람다의 표현 설명
   /// (int 파라미터1, String 파라미터2) => 반환값
   // int add(int a, int b) {
@@ -525,7 +525,7 @@ void practice9_Lamda() {
 
   final add2 = (int a , int b) => a + b;
 
-  /// 다양한 Lamda
+  /// 다양한 Lambda
   final add3 = (a) => (b) => a + b;
   final add4 = add3(2);
   print(add4(3));
@@ -578,5 +578,5 @@ main() {
   //practice8_Iterable();
 
   /// Lamda practice
-  practice9_Lamda();
+  practice9_Lambda();
 }
