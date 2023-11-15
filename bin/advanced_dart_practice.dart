@@ -196,6 +196,33 @@ Stream<String> countStream2(int max) async* {
   yield '완료되었습니다.';
   yield* countStream2(max);
 }
+
+////////////////////////////////////////////////////////////////////////////
+/// Lamda
+
+void run(int Function(int a, int b) add2, int a, int b) {
+  final sum = add2(a, b);
+  print(sum);
+}
+
+int Function(T, T) byIntField<T>(int Function(T func) fieldProvider, {bool reverse = false}) => (T a, T b) {
+  final fieldA = fieldProvider(a);
+  final fieldB = fieldProvider(b);
+  return reverse ? fieldA.compareTo(fieldB) : fieldB.compareTo(fieldA);
+};
+
+class Robot {
+  final int number;
+
+  Robot(this.number);
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "Robot 일련번호 : <$number>";
+  }
+}
+
 //*************************************************************************//
 
 /// TestList
@@ -487,6 +514,44 @@ void practice8_Iterable() async{
 
 }
 
+void practice9_Lamda() {
+  /// 람다의 표현 설명
+  /// (int 파라미터1, String 파라미터2) => 반환값
+  // int add(int a, int b) {
+  //   return a + b;
+  // }
+
+  int add(int a, int b) => a + b;
+
+  final add2 = (int a , int b) => a + b;
+
+  /// 다양한 Lamda
+  final add3 = (a) => (b) => a + b;
+  final add4 = add3(2);
+  print(add4(3));
+  print(add3(2)(3));
+
+
+  /// 람다의 특징 설명
+
+  /// 1. 익명 : 이름을 지을 수 없다. (변수에 담을 수 있음)
+  /// 2. 함수 : Class에 종속되지 않음 Class에 종속된것은 Method
+  /// 3. 전달 : 1급 객체로서 함수 파라미터로 전달, 변수에 저장 가능
+  /// 4. 간결성 : 익명 클래스처럼 많은 코드를 구현할 필요가 없다.
+
+  /// List Sort 예제1
+  // final list = [5,2,4,1,3];
+  // list.sort((a, b) => a == b ? 0 : a > b ? 1 : -1);
+  // print(list);
+
+  /// List Sort 예제2
+  final robotList = [Robot(1), Robot(2),Robot(3),Robot(4),Robot(5),Robot(6)];
+  robotList.sort(byIntField<Robot>((element) => element.number, reverse: true));
+  print(robotList);
+
+
+
+}
 main() {
   /// class practice
   //practice1_Class();
@@ -511,4 +576,7 @@ main() {
 
   /// Iterable practice
   //practice8_Iterable();
+
+  /// Lamda practice
+  practice9_Lamda();
 }
