@@ -64,7 +64,7 @@ ResultString doTheWork() {
   ///...2
   ///...
   ///...4
-  return ResultString('중요한 데이터');
+  return ResultString('중요한 result 데이터');
 }
 
 ResultDouble doTheWork2() {
@@ -72,7 +72,7 @@ ResultDouble doTheWork2() {
   ///...2
   ///...
   ///...4
-  return ResultDouble('중요한 데이터');
+  return ResultDouble('중요한 result2 데이터');
 }
 
 /////////////////////////////////
@@ -221,6 +221,78 @@ class Robot {
     // TODO: implement toString
     return "Robot 일련번호 : <$number>";
   }
+}
+
+////////////////////////////////////////////////////////////////////////////
+/// Functional Programing
+
+class UserInfo {
+  final int id;
+  final String name;
+  final int xp;
+  final String roll;
+
+  UserInfo(this.id, this.name, this.xp, this.roll );
+}
+
+final moon = UserInfo(1, 'Moon', 20, '전사');
+final sun = UserInfo(2, 'Sun', 40, '마법사');
+final sky = UserInfo(3, 'Sky', 50, '도적');
+final cloud = UserInfo(4, 'Cloud', 70, '궁수');
+final rain = UserInfo(5, 'Rain', 90, '힐러');
+
+final userInfos = [moon, sun, sky, cloud];
+
+
+List<UserInfo> getUserInfos() {
+  return userInfos;
+}
+
+String infoToName(info) => info.name;
+
+/// 기타 함수형 프로그래밍
+
+Iterable<T> runAll<T>(void Function(Iterable<T> value) doFunction, Iterable<T> next){
+  doFunction(next);
+  return next;
+}
+
+Iterable<T> runEach<T>(void Function(T value) doFunction, Iterable<T> next){
+for (final T item in next) {
+doFunction(item);
+}
+return next;
+}
+
+Function reduce = <E>(E Function(E value, E element) combine, Iterable<E> iterable) {
+  Iterator<E> iterator = iterable.iterator;
+  if (!iterator.moveNext()){
+    print('No Element');
+  }
+  E value = iterator.current;
+  while (iterator.moveNext()){
+    value = combine(value, iterator.current);
+  }
+  return value;
+};
+
+int add(int a, int b) => a + b;
+
+int multiply(int a, int b) => a*b;
+
+/// 커리 F => 함수 자체를 쪼개주는 역할
+/// final curryFunction = curry(F(a,b))
+/// curryFunction(a)(b)
+curry(Function f) => (a, {Iterable? args}) => (args?.length ?? 0) > 1 ? f(a, args) : (b) => f(a, b);
+
+/// fxDart
+fxDart(List args) async {
+  await reduce((a, f) async {
+    if (a is Future) {
+      return f(await a);
+    }
+    return f(a);
+  }, args);
 }
 
 //*************************************************************************//
@@ -376,6 +448,8 @@ void practice5_generic() {
   /// class generic
   final result = doTheWork();
   final result2 = doTheWork2();
+  print(result.data);
+  print(result2.data);
 
   /// method or function generic
   final result3 = doTheWork4<Duck>(() => Duck());
@@ -552,6 +626,51 @@ void practice9_Lambda() {
 
 
 }
+
+void practice10_Functional() async {
+  /// Functional Programming
+
+  /// 프로그래밍 방법을 부르는 이름들
+
+  /// 절차적 프로그래밍 - 명령형 프로그래밍
+  /// UserInfos => Users => Users.name => 출력
+  final infos = getUserInfos();
+  final list = <String>[];
+  for(final info in infos) {
+    list.add(info.name);
+  }
+  //print(list);
+
+
+  /// 함수형 프로그래밍 - 선언형 프로그래밍
+  //final nameList = getUserInfos().map((info) => info.name).toList();
+  //final nameList = getUserInfos().map(infoToName).toList();
+  //print(nameList);
+
+  /// 기타 함수형 프로그래밍
+  //runAll((value) => print(value), [1,2,3,4]);
+
+  //runEach((value) => print(value), [1,2,3,4]);
+
+  //print(reduce<int>(add, [1,2]));
+  //print(reduce<int>(multiply, [1,3,4,5,6,7,7,8,99]));
+
+  final curryMultiply = curry(multiply);
+  //print(curryMultiply(2)(3));
+
+  /// 구구단으로 응용 가능
+  // final multiply2 = curryMultiply(2);
+  // for (int i = 1; i < 10; i++ ){
+  //   print('2 곱하기 $i 는 ${multiply2(i)}');
+  // }
+
+
+}
+
+
+
+
+
 main() {
   /// class practice
   //practice1_Class();
@@ -578,5 +697,8 @@ main() {
   //practice8_Iterable();
 
   /// Lamda practice
-  practice9_Lambda();
+  //practice9_Lambda();
+
+  /// Functional practice
+  practice10_Functional();
 }
