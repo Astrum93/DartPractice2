@@ -294,6 +294,72 @@ fxDart(List args) async {
   }, args);
 }
 
+////////////////////////////////////////////////////////////////////////////
+
+abstract class Poketmon {
+  Poketmon(this.level);
+
+  int level;
+
+  void attack() {
+    print('공격!');
+  }
+}
+
+abstract mixin class Run {
+  String leg = 'leg';
+
+  void run() {
+    print('성공적으로 도망쳤다.');
+  }
+}
+
+abstract interface class Fly {
+  // String wing = '';
+  String get wing;
+  set wing(String value);
+
+  Fly(String name) {
+    print('파닥파닥');
+  }
+}
+
+abstract interface class MoreFastFly extends Fly{
+  MoreFastFly(super.name);
+
+ void fastFly(){}
+}
+
+class Pikachu extends Poketmon with Run{
+  Pikachu(super.level);
+
+  @override
+  void attack() {
+    // TODO: implement attack
+    print('백만 볼트~!~!~!');
+  }
+
+}
+
+class Mu extends Poketmon with Run implements MoreFastFly{
+  Mu(super.level, this.wing);
+
+  @override
+  void attack() {
+    // TODO: implement attack
+    print('염력!');
+  }
+
+  @override
+  String wing;
+
+  @override
+  void fastFly() {
+    // TODO: implement fastFly
+  }
+
+}
+
 //*************************************************************************//
 
 /// TestList
