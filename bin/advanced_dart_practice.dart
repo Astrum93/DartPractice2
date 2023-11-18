@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:io';
+import 'dart:math';
 import 'extention/collection_extention.dart';
 
 ////////////////////////////////////////////////////////////////////////////
@@ -121,16 +122,14 @@ abstract class goToWalkInterface {
 class SyncWalk extends goToWalkInterface {
   @override
   String goToWalk() {
-    // TODO: implement goToWalk
-    throw UnimplementedError();
+    return 'SyncWalk 입니다.';
   }
 }
 
 class AsyncWalk extends goToWalkInterface {
   @override
   Future<String> goToWalk() async {
-    // TODO: implement goToWalk
-    throw UnimplementedError();
+    return 'AsyncWalk 입니다.';
   }
 }
 
@@ -462,7 +461,7 @@ void practice6_Future() async {
   /// 시간이 걸리는 Computation 작업 또는 유저의 응답을 기다려야되는 상태
 
   /// Future의 생성과 수행
-  // print('시작');
+  //print('시작');
   // getTestList().then((value){
   //   print(value.toString());
   // });
@@ -472,31 +471,31 @@ void practice6_Future() async {
 
   /// Future Timeout
   // print('시작');
-  // final testlist = getTestList().timeout(Duration(seconds: 1)).onError((error, stackTrace) => []);
-  // print(testlist);
+  // final testlist = await getTestList().timeout(Duration(seconds: 1)).onError((error, stackTrace) => []);
   // print('종료');
 
   /// Future Error handling
-  print('시작');
+  //print('시작');
 
   /// 첫 번째 방법
   // try {
-  //   getTestList().timeout(Duration(seconds: 1));
+  //   await getTestList().timeout(Duration(seconds: 1));
   // }catch (e) {
   //   print(e);
   // }
+  // print('종료');
 
   /// 두 번째 방법
-  getTestList()
+  print('시작');
+  await getTestList()
       .timeout(Duration(seconds: 1))
       .then((value) => print(value))
-      .catchError((error, stackTrace) {
+      .catchError((error) {
     print(error);
-    print(stackTrace);
+    print('에러 발생!!!');
   });
   print('종료');
 
-  /// FutureOr
 }
 
 void practice7_Stream() {
@@ -667,6 +666,91 @@ void practice10_Functional() async {
 
 }
 
+void practice11_DartCoreLib() {
+  // String content = '동물들 : ';
+  //
+  // StringBuffer stringBuffer = StringBuffer(content);
+  // stringBuffer.writeAll(['사자', '호랑이', '원숭이', '얼룩말'], ',');
+  // print(stringBuffer.toString());
+
+  final findNumberRegExp = RegExp(r'\d+');
+  const exampleUriPath = 'http://api.dart.dev/stable/3.0.6/dart-core-library.html?param1=good&param2=33&param3=22.4&color[]=red&color[]=blue&color[]=3';
+
+  // final matches = findNumberRegExp.allMatches(exampleUriPath);
+  // for (final match in matches) {
+  //   final matchedString = exampleUriPath.substring(match.start, match.end);
+  //   print(matchedString);
+  // }
+
+  // final findHashTagRegExp = RegExp(r'(#[\d|A-Za-z가-힣ㄱ-ㅎㅏ-ㅣ][^를 ]*)');
+  // const hashContent = '문장에 #해를시 #태그를 찾아주세요. #플러터 #좋아유';
+  //
+  // final hashMatches = findHashTagRegExp.allMatches(hashContent);
+  // for (final match in hashMatches) {
+  //   final matchedString = hashContent.substring(match.start, match.end);
+  //   print(matchedString);
+  // }
+
+  final uri = Uri.parse(exampleUriPath);
+  final pathuri = Uri.parse('?param1=good&param2=33&param3=22.4&color[]=red&color[]=blue&color[]=3');
+  /// scheme은 :// 앞 부분
+  print(uri.scheme);
+  /// host는 ://부터 첫 번째 / 까지
+  print(uri.host);
+  /// path는 파라미터가 나오는 ?영역 전까지
+  print(uri.path);
+
+  for (final pathSegment in pathuri.pathSegments) {
+    print(pathSegment);
+  }
+
+  final params = pathuri.queryParametersAll;
+  final param4 = params['color[]'];
+  print(param4);
+}
+
+void practice12_DartOOP() {
+  /// SOLID Principles
+
+  /// 단일 책임 원칙 (Single responsibility principle) : 한 클래스는 하나의 책임만 가져야 한다.
+  /// OCP 개방-폐쇄 원칙 (Open/closed principle) : “소프트웨어 요소는 확장에는 열려 있으나 변경에는 닫혀 있어야 한다.”
+  /// LSP 리스코프 치환 원칙 (Liskov substitution principle) : “프로그램의 객체는 프로그램의 정확성을 깨뜨리지 않으면서 하위 타입의 인스턴스로 바꿀 수 있어야 한다.” 계약에 의한 설계를 참고하라.
+  /// ISP 인터페이스 분리 원칙 (Interface segregation principle) : “특정 클라이언트를 위한 인터페이스 여러 개가 범용 인터페이스 하나보다 낫다.”
+  /// DIP 의존관계 역전 원칙 (Dependency inversion principle) : 프로그래머는 “추상화에 의존해야지, 구체화에 의존하면 안된다.” 의존성 주입은 이 원칙을 따르는 방법 중 하나다.
+
+  /// 객체지향 프로그래밍(OOP)의 특징
+
+  /// 1. 추상화 (Abstraction)
+  ///  - Abstract Class (extends - only 1)
+  ///   - Animal - age, eat()
+  ///   - Dog, Cat
+  ///
+  ///  - Abstract mixin Class (with - n*)
+  ///
+  ///
+  ///  - Abstract interface Class (implements - n*)
+  ///
+  ///
+
+  // final bird = Bird(0);
+  // bird.fly();
+  // bird.run();
+
+  /// 2. 상속 (Inheritance)
+  ///  - Extends
+
+  /// 3. 다형성 (Polymorphism)
+  ///  - override
+  ///  - implement
+
+
+
+  /// 4. 캡슐화 (Encapsulation)
+  ///  - private ( _ 언더스코어, 언더바)
+  ///  - method
+  ///  - get & set
+}
+
 
 
 
@@ -700,5 +784,11 @@ main() {
   //practice9_Lambda();
 
   /// Functional practice
-  practice10_Functional();
+  //practice10_Functional();
+
+  /// Dart Core Libraries practice
+  //practice11_DartCoreLib();
+
+  /// Dart OOP practice
+  practice12_DartOOP();
 }
