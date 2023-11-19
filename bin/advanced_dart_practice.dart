@@ -1,8 +1,19 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:io';
+import 'dart:isolate';
 import 'dart:math';
+import 'design_pattern/builder_pattern.dart';
+import 'design_pattern/command_pattern.dart';
+import 'design_pattern/factory_pattern.dart';
+import 'design_pattern/singleton_pattern.dart';
 import 'extention/collection_extention.dart';
+import 'solid/1_srp/local_repository.dart';
+import 'solid/1_srp/todo_note.dart';
+import 'solid/2_ocp.dart';
+import 'solid/3_lsp/3_lsp.dart';
+import 'solid/4_isp.dart';
+import 'solid/5_dip.dart';
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -339,9 +350,22 @@ class Pikachu extends Poketmon with Run{
     print('백만 볼트~!~!~!');
   }
 
+  // mixin class Run
+  @override
+  set leg(String _leg) {
+    // TODO: implement leg
+    super.leg = _leg;
+  }
+
+  @override
+  void run() {
+    // TODO: implement run
+    print('레벨$level Pikachu가 달립니다.');
+  }
+
 }
 
-class Mu extends Poketmon with Run implements MoreFastFly{
+class Mu extends Poketmon with Run implements MoreFastFly, Fly{
   Mu(super.level, this.wing);
 
   @override
@@ -351,13 +375,27 @@ class Mu extends Poketmon with Run implements MoreFastFly{
   }
 
   @override
+  void run() {
+    // TODO: implement run
+    print('레벨$level MU가 달립니다.');
+  }
+
+  @override
   String wing;
 
   @override
   void fastFly() {
     // TODO: implement fastFly
+    print('매우 빠르게 날다');
   }
 
+}
+
+void runRace(List<Run> list){
+  for (final runner in list) {
+    runner.run();
+    //print(runner);
+  }
 }
 
 //*************************************************************************//
@@ -776,14 +814,6 @@ void practice11_DartCoreLib() {
 }
 
 void practice12_DartOOP() {
-  /// SOLID Principles
-
-  /// 단일 책임 원칙 (Single responsibility principle) : 한 클래스는 하나의 책임만 가져야 한다.
-  /// OCP 개방-폐쇄 원칙 (Open/closed principle) : “소프트웨어 요소는 확장에는 열려 있으나 변경에는 닫혀 있어야 한다.”
-  /// LSP 리스코프 치환 원칙 (Liskov substitution principle) : “프로그램의 객체는 프로그램의 정확성을 깨뜨리지 않으면서 하위 타입의 인스턴스로 바꿀 수 있어야 한다.” 계약에 의한 설계를 참고하라.
-  /// ISP 인터페이스 분리 원칙 (Interface segregation principle) : “특정 클라이언트를 위한 인터페이스 여러 개가 범용 인터페이스 하나보다 낫다.”
-  /// DIP 의존관계 역전 원칙 (Dependency inversion principle) : 프로그래머는 “추상화에 의존해야지, 구체화에 의존하면 안된다.” 의존성 주입은 이 원칙을 따르는 방법 중 하나다.
-
   /// 객체지향 프로그래밍(OOP)의 특징
 
   /// 1. 추상화 (Abstraction)
@@ -798,9 +828,10 @@ void practice12_DartOOP() {
   ///
   ///
 
-  // final bird = Bird(0);
-  // bird.fly();
-  // bird.run();
+  // final mu = Mu(1, 'mu');
+  // print(mu.level);
+  // mu.fastFly();
+
 
   /// 2. 상속 (Inheritance)
   ///  - Extends
@@ -809,17 +840,141 @@ void practice12_DartOOP() {
   ///  - override
   ///  - implement
 
+  // 첫 번째 방법
+  final mu = Mu(99, 'mu');
+  final pikachu = Pikachu(35);
+
+  runRace(<Run>[mu, pikachu]);
+
 
 
   /// 4. 캡슐화 (Encapsulation)
   ///  - private ( _ 언더스코어, 언더바)
   ///  - method
   ///  - get & set
+
+  /// 5. KISS (Keep It Simple Stupid) :  "간단하게 유지하라 어리석게 하지 말고"
+  /// 6. YAGNI (You Ain't Gonna Need It) : "너는 그것을 필요로 하지 않을 것이다."
+  /// 7. DRY (Don't Repeat Yourself) : "반복적인 코딩은 하지마라"
 }
 
+void practice13_SOLIDPrinciple(){
+  /// SOLID Principles
+
+  /// SRP 단일 책임 원칙 (Single responsibility principle) : 한 클래스는 하나의 책임만 가져야 한다.
+  /// Class or File 단위의 역할을 명확히 하자.
+  ///  - Property 분리
+  ///  - Method or Function 분리
+  ///  HOW? Class나 File의 이름을 보고 결정
+
+  ///  bin/solid/1_srp
+  // final todo = TodoNote();
+  // final repository = LocalRepository();
+  // todo.setContent('수학 과제', "p20 ~ p40를 공책에 작성");
+  //
+  // repository.save(todo);
+  // repository.modify();
+  // repository.remove();
 
 
+  /// OCP 개방-폐쇄 원칙 (Open/closed principle) : “소프트웨어 요소는 확장에는 열려 있으나 변경에는 닫혀 있어야 한다.”
+  /// Open for extension
+  /// Closed for modification
+  /// 기능, 코드 확장에는 열려있고 (Open for extension)
+  /// 추가를 할때, 수정을 안해도 되는 설계 (Closed for modification)
 
+  /// bin/solid/2_ocp.dart
+  /// 1. Class를 추가할 때
+  /// 2. Enum을 추가할 때
+  // final Fruit fruit = getFruit();
+  // String color = fruit.color;
+  // print(color);
+
+
+  /// LSP 리스코프 치환 원칙 (Liskov substitution principle) : “프로그램의 객체는 프로그램의 정확성을 깨뜨리지 않으면서 하위 타입의 인스턴스로 바꿀 수 있어야 한다.” 계약에 의한 설계를 참고하라.
+  /// "Subtype should behave like a supertype."
+  /// 상속받은 Subtype은 Supertype의 동작 의도대로 수행되어야 한다.
+
+  /// bin/solid/3_lsp
+  // Rectangular2 rectangular = getRectangular();
+  // rectangular.height = 40;
+  //
+  // print(rectangular.width);
+
+
+  /// ISP 인터페이스 분리 원칙 (Interface segregation principle) : “특정 클라이언트를 위한 인터페이스 여러 개가 범용 인터페이스 하나보다 낫다.”
+  /// 쪼개야하는 인터페이스는 분리하자.
+
+  /// bin/solid/4_isp.dart
+  // final todo = TodoNote();
+  // todo.setContent('수학 과제', "p20 ~ p40를 공책에 작성");
+  //
+  // final repo = Repo1();
+  // repo.save(todo);
+  // repo.modify(todo);
+
+
+  /// DIP 의존관계 역전 원칙 (Dependency inversion principle) : 프로그래머는 “추상화에 의존해야지, 구체화에 의존하면 안된다.” 의존성 주입은 이 원칙을 따르는 방법 중 하나다.
+  /// 직접적인 참조 대신 Abstract 참조를 사용하라
+
+  /// bin/solid/5_dip.dart
+  final api = UserApi(ConsoleLogger());
+  api.registerUser("홍길동", "abc123*");
+
+}
+
+void practice14_DesignPattern() {
+  /// Design Pattern의 장점
+  ///  1. 유지보수를 용이
+  ///  2. 확장성과 유연성을 제공
+  ///  3. 코드 재사용
+  ///  4. 코드 품질 향상
+  ///  5. Dart뿐 아니라 다른 언어에서도 같은 이름/방식이 사용됨
+  ///
+  /// Design Pattern의 단점
+  ///  1. 러닝 커브가 존재 (학습 필요)
+  ///  2. 오히려 복잡해지거나 초반 개발시간이 늘어날 수 있음
+  ///
+  /// Design Pattern 추천 사이트
+  /// https://github.com/kamranahmedse/design-patterns-for-humans
+
+
+  /// Singleton Pattern
+  /// 어플리케이션 개발 중 하나의 객체만 유지하고 싶을 경우 사용
+  // final object1 = SingletonObject();
+  // object1.count = 100;
+  // final object2 = SingletonObject();
+  // final object3 = SingletonObject.instance;
+  //
+  // // print(object1 == object2);
+  // // print(object2 == object3);
+  // // print(object1 == object3);
+  // print(object3.count);
+
+  SingletonObject objectFromAnotherWorld = SingletonObject.instance;
+  /// Isolate에서 넘어온 Singleton 변수는 다른 Singleton 변수다.
+  Isolate.run(() {
+    final isolateObject = SingletonObject();
+    final isolateObject2 = SingletonObject();
+    print(isolateObject == isolateObject2);
+    print(isolateObject == objectFromAnotherWorld);
+  });
+
+
+  /// Factory Pattern
+  final FoodFactory factory = getFactory();
+  final Food food = factory.createFood();
+  print(food.createFlavor().taste);
+
+
+  /// Command Pattern
+  final Command selectedCommand = SaveCommand();
+  selectedCommand.execute();
+
+
+  /// Builder Pattern
+  //final textWidget = TextWidgetBuilder('연습').setFontSize(14).setColor(Colors.blue).make();
+}
 
 main() {
   /// class practice
@@ -856,5 +1011,11 @@ main() {
   //practice11_DartCoreLib();
 
   /// Dart OOP practice
-  practice12_DartOOP();
+  //practice12_DartOOP();
+
+  /// Dart SOLID Principle practice
+  //practice13_SOLIDPrinciple();
+
+  /// Dart Design Pattern practice
+  practice14_DesignPattern();
 }
