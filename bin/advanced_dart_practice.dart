@@ -147,6 +147,9 @@ class AsyncWalk extends goToWalkInterface {
 ////////////////////////////////////////////////////////////////////////////
 /// Stream(Generator)
 
+// Stream 생성
+Stream<int> makeStream = Stream<int>.fromIterable([1, 2, 3, 4, 5]);
+
 void addDataToTheSink(StreamController<int> controller) async{
   for(int i=1; i <= 4; i++){
     //print('before add sink');
@@ -529,17 +532,17 @@ void practice3_Map() {
 
 void practice4_toSet() {
   /// toSet
-  //이 반복 가능 항목과 동일한 요소를 포함하는 Set을 만듭니다.
+  // 이 반복 가능 항목과 동일한 요소를 포함하는 Set을 만듭니다.
   // iterable에 요소가 두 번 이상 포함되어 있거나 동일한 요소가 하나 이상 포함된 경우 집합에는 iterable보다 적은 수의 요소가 포함될 수 있습니다.
   // 세트의 요소 순서는 반복 가능한 요소의 순서와 동일 하다고 보장되지 않습니다.
 
   /// Map의 entries toSet()
   final uniqueAlphabet = testVocabulary.entries.toSet();
 
-  /// Map의 entries toSet()
+  /// Map의 keys toSet()
   final uniqueAlphabet2 = testVocabulary.keys.toSet();
 
-  /// Map의 entries toSet()
+  /// Map의 values toSet()
   final uniqueAlphabet3 = testVocabulary.values.toSet();
 
   print(uniqueAlphabet);
@@ -611,8 +614,17 @@ void practice7_Stream() {
   /// 1. async*
   /// 2. streamController
 
-  // [1,2,3,4,5,6,7,8,9,10].forEach((element){
-  //   print(element);
+  makeStream.listen((data) {
+    print('Received data: $data');
+  }, onDone: () {
+    print('Stream completed');
+  }, onError: (error) {
+    print('Error: $error');
+  });
+
+
+  // [1,2,3,4,5,6,7,8,9,10].forEach((item){
+  //   print(item);
   // });
   /// 위의 코드와 다른점은 딜레이 마다 데이터를 받아올 수 있다.
   // countStream(5).listen((event) {
@@ -639,19 +651,20 @@ void practice7_Stream() {
   // });
 
   /// Stream Error Handling
-//   countStreamForError(5).listen((event) {
-//     print(event);
-//   }).onError((e, trace){
-//   print(e.toString());
-//   });
-// }
+  //   countStreamForError(5).listen((event) {
+  //     print(event);
+  //   }).onError((e, trace){
+  //   print(e.toString());
+  //   });
+  //}
 
-// 에러 무시하고 싶을 때 yield*
-countStreamForError(5).listen((event) {
-print(event);
-},cancelOnError: false).onError((e, trace){
-print(e.toString());
-});
+  /// 에러 무시하고 싶을 때 yield*
+  // countStreamForError(5).listen((event) {
+  // print(event);
+  // },cancelOnError: false).onError((e, trace){
+  // print(e.toString());
+  // });
+  // }
 }
 
 void practice8_Iterable() async{
@@ -996,7 +1009,7 @@ main() {
   //practice6_Future();
 
   /// Stream practice
-  //practice7_Stream();
+  practice7_Stream();
 
   /// Iterable practice
   //practice8_Iterable();
@@ -1017,5 +1030,5 @@ main() {
   //practice13_SOLIDPrinciple();
 
   /// Dart Design Pattern practice
-  practice14_DesignPattern();
+  //practice14_DesignPattern();
 }
