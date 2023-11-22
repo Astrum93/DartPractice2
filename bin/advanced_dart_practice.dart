@@ -150,11 +150,11 @@ class AsyncWalk extends goToWalkInterface {
 // Stream 생성
 Stream<int> makeStream = Stream<int>.fromIterable([1, 2, 3, 4, 5]);
 
-void addDataToTheSink(StreamController<int> controller) async{
-  for(int i=1; i <= 4; i++){
-    //print('before add sink');
+void addDataToTheSink(StreamController<int> controller) async {
+  for (int i = 1; i <= 4; i++) {
+    print('before add sink');
     controller.sink.add(i);
-    //print('after add sink');
+    print('after add sink');
     await sleepAsync(Duration(seconds: 1));
   }
 }
@@ -167,12 +167,12 @@ Stream<int> countStream(int max) async* {
 }
 
 // 에러용
-Stream<int> countStreamForError(int max) async* {
+Stream<int> makeErrorStream(int max) async* {
   for (int i = 1; i <= max; i++) {
-    if (i == 2){
+    if (i == 2) {
       yield* Stream.error(Exception('에러발생'));
-    }else {
-    yield i;
+    } else {
+      yield i;
     }
     await sleepAsync(Duration(seconds: 1));
   }
@@ -196,7 +196,7 @@ Iterable<String> makeIterable2(int max) sync* {
     //sleep(Duration(seconds: 1));
     yield i.toString();
   }
-  yield*  ['one' , 'two', 'three', 'four'];
+  yield* ['one', 'two', 'three', 'four'];
   yield '완료되었습니다.';
 }
 
@@ -218,11 +218,13 @@ void run(int Function(int a, int b) add2, int a, int b) {
   print(sum);
 }
 
-int Function(T, T) byIntField<T>(int Function(T func) fieldProvider, {bool reverse = false}) => (T a, T b) {
-  final fieldA = fieldProvider(a);
-  final fieldB = fieldProvider(b);
-  return reverse ? fieldA.compareTo(fieldB) : fieldB.compareTo(fieldA);
-};
+int Function(T, T) byIntField<T>(int Function(T func) fieldProvider,
+        {bool reverse = false}) =>
+    (T a, T b) {
+      final fieldA = fieldProvider(a);
+      final fieldB = fieldProvider(b);
+      return reverse ? fieldA.compareTo(fieldB) : fieldB.compareTo(fieldA);
+    };
 
 class Robot {
   final int number;
@@ -245,7 +247,7 @@ class UserInfo {
   final int xp;
   final String roll;
 
-  UserInfo(this.id, this.name, this.xp, this.roll );
+  UserInfo(this.id, this.name, this.xp, this.roll);
 }
 
 final moon = UserInfo(1, 'Moon', 20, '전사');
@@ -256,7 +258,6 @@ final rain = UserInfo(5, 'Rain', 90, '힐러');
 
 final userInfos = [moon, sun, sky, cloud];
 
-
 List<UserInfo> getUserInfos() {
   return userInfos;
 }
@@ -265,25 +266,27 @@ String infoToName(info) => info.name;
 
 /// 기타 함수형 프로그래밍
 
-Iterable<T> runAll<T>(void Function(Iterable<T> value) doFunction, Iterable<T> next){
+Iterable<T> runAll<T>(
+    void Function(Iterable<T> value) doFunction, Iterable<T> next) {
   doFunction(next);
   return next;
 }
 
-Iterable<T> runEach<T>(void Function(T value) doFunction, Iterable<T> next){
-for (final T item in next) {
-doFunction(item);
-}
-return next;
+Iterable<T> runEach<T>(void Function(T value) doFunction, Iterable<T> next) {
+  for (final T item in next) {
+    doFunction(item);
+  }
+  return next;
 }
 
-Function reduce = <E>(E Function(E value, E element) combine, Iterable<E> iterable) {
+Function reduce =
+    <E>(E Function(E value, E element) combine, Iterable<E> iterable) {
   Iterator<E> iterator = iterable.iterator;
-  if (!iterator.moveNext()){
+  if (!iterator.moveNext()) {
     print('No Element');
   }
   E value = iterator.current;
-  while (iterator.moveNext()){
+  while (iterator.moveNext()) {
     value = combine(value, iterator.current);
   }
   return value;
@@ -291,12 +294,13 @@ Function reduce = <E>(E Function(E value, E element) combine, Iterable<E> iterab
 
 int add(int a, int b) => a + b;
 
-int multiply(int a, int b) => a*b;
+int multiply(int a, int b) => a * b;
 
 /// 커리 F => 함수 자체를 쪼개주는 역할
 /// final curryFunction = curry(F(a,b))
 /// curryFunction(a)(b)
-curry(Function f) => (a, {Iterable? args}) => (args?.length ?? 0) > 1 ? f(a, args) : (b) => f(a, b);
+curry(Function f) => (a, {Iterable? args}) =>
+    (args?.length ?? 0) > 1 ? f(a, args) : (b) => f(a, b);
 
 /// fxDart
 fxDart(List args) async {
@@ -338,13 +342,13 @@ abstract interface class Fly {
   }
 }
 
-abstract interface class MoreFastFly extends Fly{
+abstract interface class MoreFastFly extends Fly {
   MoreFastFly(super.name);
 
- void fastFly(){}
+  void fastFly() {}
 }
 
-class Pikachu extends Poketmon with Run{
+class Pikachu extends Poketmon with Run {
   Pikachu(super.level);
 
   @override
@@ -365,10 +369,9 @@ class Pikachu extends Poketmon with Run{
     // TODO: implement run
     print('레벨$level Pikachu가 달립니다.');
   }
-
 }
 
-class Mu extends Poketmon with Run implements MoreFastFly, Fly{
+class Mu extends Poketmon with Run implements MoreFastFly, Fly {
   Mu(super.level, this.wing);
 
   @override
@@ -391,10 +394,9 @@ class Mu extends Poketmon with Run implements MoreFastFly, Fly{
     // TODO: implement fastFly
     print('매우 빠르게 날다');
   }
-
 }
 
-void runRace(List<Run> list){
+void runRace(List<Run> list) {
   for (final runner in list) {
     runner.run();
     //print(runner);
@@ -602,7 +604,6 @@ void practice6_Future() async {
     print('에러 발생!!!');
   });
   print('종료');
-
 }
 
 void practice7_Stream() {
@@ -614,26 +615,53 @@ void practice7_Stream() {
   /// 1. async*
   /// 2. streamController
 
-  makeStream.listen((data) {
-    print('Received data: $data');
-  }, onDone: () {
-    print('Stream completed');
-  }, onError: (error) {
-    print('Error: $error');
-  });
-
+  // makeStream.listen((data) {
+  //   print('Received data: $data');
+  // }, onDone: () {
+  //   print('Stream completed');
+  // }, onError: (error) {
+  //   print('Error: $error');
+  // });
 
   // [1,2,3,4,5,6,7,8,9,10].forEach((item){
   //   print(item);
   // });
+
   /// 위의 코드와 다른점은 딜레이 마다 데이터를 받아올 수 있다.
   // countStream(5).listen((event) {
   //   print(event);
   // });
 
-  //final controller = StreamController<int>();
+  // final controller = StreamController<int>();
+  // final stream = controller.stream;
+  // addDataToTheSink(controller);
 
-  //addDataToTheSink(controller);
+  /// StreamController의 sink를 이용한 이벤트 추가
+  // controller.sink.add(1);
+  // controller.sink.add(2);
+  // controller.sink.add(3);
+
+  /// Error 추가하기
+  // controller.sink.addError('에러발생 에러발생!!!');
+
+  ///StreamController 닫기
+  // controller.sink.close();
+
+  //stream.listen((event) { print(event);});
+
+  /// Stream Subscription을 이용한 구독
+  // controller.stream.listen(
+  //       (data) {
+  //     print('전달 받은 data : $data');
+  //   },
+  //   onError: (error) {
+  //     print('에러가 발생했습니다. \n에러 내용은 : $error 입니다.');
+  //   },
+  //   onDone: () {
+  //     print('Stream이 종료 되었습니다.');
+  //   },
+  // );
+
   /// Stream 데이터 변환
   //countStream(4).map((event) => '$event 초가 지났습니다.').listen((event) { print(event); });
 
@@ -641,35 +669,46 @@ void practice7_Stream() {
   // final broadCastStream = countStream(4).asBroadcastStream();
   //
   // broadCastStream.listen((event) {
-  //   print(event);
+  //   print('첫 번째 Stream 값은 $event 입니다.');
   // });
-  //
+  // broadCastStream.listen((event) {
+  //   print(' 두 번째 Stream 값은 ${event + event} 입니다.');
+  // });
+
   // Future.delayed(Duration(seconds: 2),(){
   //   broadCastStream.listen((event) {
   //     print('$event초 후 출력');
   //   });
   // });
 
+  /// Broadcast를 사용한 StreamController
+  // final broadcastController = StreamController.broadcast();
+  // final stream = broadcastController.stream;
+  //
+  // stream.listen((event) {print('event의 값은 $event입니다.');});
+  // stream.listen((event2) {print('event2의 값은 ${event2 + event2}입니다.');});
+  //
+  // broadcastController.sink.add(10);
+  // broadcastController.sink.add(100);
+
   /// Stream Error Handling
-  //   countStreamForError(5).listen((event) {
-  //     print(event);
-  //   }).onError((e, trace){
-  //   print(e.toString());
-  //   });
-  //}
+  makeErrorStream(5).listen((event) {
+    print(event);
+  }).onError((e, trace) {
+    print(e.toString());
+  });
 
   /// 에러 무시하고 싶을 때 yield*
-  // countStreamForError(5).listen((event) {
-  // print(event);
-  // },cancelOnError: false).onError((e, trace){
-  // print(e.toString());
-  // });
-  // }
+  makeErrorStream(5).listen((event) {
+    print(event);
+  }, cancelOnError: false).onError((e, trace) {
+    print(e.toString());
+  });
 }
 
-void practice8_Iterable() async{
+void practice8_Iterable() async {
   /// List와 Iterable
-  final List list = ['blue' , 'yellow', 'red'];
+  final List list = ['blue', 'yellow', 'red'];
   // final iterator = list.iterator;
   //
   // print(iterator.current);
@@ -698,10 +737,9 @@ void practice8_Iterable() async{
   //   print(message);
   // }
 
-  await for (final message in countStream2(3)){
+  await for (final message in countStream2(3)) {
     print(message);
   }
-
 }
 
 void practice9_Lambda() {
@@ -713,14 +751,13 @@ void practice9_Lambda() {
 
   int add(int a, int b) => a + b;
 
-  final add2 = (int a , int b) => a + b;
+  final add2 = (int a, int b) => a + b;
 
   /// 다양한 Lambda
   final add3 = (a) => (b) => a + b;
   final add4 = add3(2);
   print(add4(3));
   print(add3(2)(3));
-
 
   /// 람다의 특징 설명
 
@@ -735,12 +772,16 @@ void practice9_Lambda() {
   // print(list);
 
   /// List Sort 예제2
-  final robotList = [Robot(1), Robot(2),Robot(3),Robot(4),Robot(5),Robot(6)];
+  final robotList = [
+    Robot(1),
+    Robot(2),
+    Robot(3),
+    Robot(4),
+    Robot(5),
+    Robot(6)
+  ];
   robotList.sort(byIntField<Robot>((element) => element.number, reverse: true));
   print(robotList);
-
-
-
 }
 
 void practice10_Functional() async {
@@ -752,11 +793,10 @@ void practice10_Functional() async {
   /// UserInfos => Users => Users.name => 출력
   final infos = getUserInfos();
   final list = <String>[];
-  for(final info in infos) {
+  for (final info in infos) {
     list.add(info.name);
   }
   //print(list);
-
 
   /// 함수형 프로그래밍 - 선언형 프로그래밍
   //final nameList = getUserInfos().map((info) => info.name).toList();
@@ -779,8 +819,6 @@ void practice10_Functional() async {
   // for (int i = 1; i < 10; i++ ){
   //   print('2 곱하기 $i 는 ${multiply2(i)}');
   // }
-
-
 }
 
 void practice11_DartCoreLib() {
@@ -791,7 +829,8 @@ void practice11_DartCoreLib() {
   // print(stringBuffer.toString());
 
   final findNumberRegExp = RegExp(r'\d+');
-  const exampleUriPath = 'http://api.dart.dev/stable/3.0.6/dart-core-library.html?param1=good&param2=33&param3=22.4&color[]=red&color[]=blue&color[]=3';
+  const exampleUriPath =
+      'http://api.dart.dev/stable/3.0.6/dart-core-library.html?param1=good&param2=33&param3=22.4&color[]=red&color[]=blue&color[]=3';
 
   // final matches = findNumberRegExp.allMatches(exampleUriPath);
   // for (final match in matches) {
@@ -809,11 +848,15 @@ void practice11_DartCoreLib() {
   // }
 
   final uri = Uri.parse(exampleUriPath);
-  final pathuri = Uri.parse('?param1=good&param2=33&param3=22.4&color[]=red&color[]=blue&color[]=3');
+  final pathuri = Uri.parse(
+      '?param1=good&param2=33&param3=22.4&color[]=red&color[]=blue&color[]=3');
+
   /// scheme은 :// 앞 부분
   print(uri.scheme);
+
   /// host는 ://부터 첫 번째 / 까지
   print(uri.host);
+
   /// path는 파라미터가 나오는 ?영역 전까지
   print(uri.path);
 
@@ -845,7 +888,6 @@ void practice12_DartOOP() {
   // print(mu.level);
   // mu.fastFly();
 
-
   /// 2. 상속 (Inheritance)
   ///  - Extends
 
@@ -859,8 +901,6 @@ void practice12_DartOOP() {
 
   runRace(<Run>[mu, pikachu]);
 
-
-
   /// 4. 캡슐화 (Encapsulation)
   ///  - private ( _ 언더스코어, 언더바)
   ///  - method
@@ -871,7 +911,7 @@ void practice12_DartOOP() {
   /// 7. DRY (Don't Repeat Yourself) : "반복적인 코딩은 하지마라"
 }
 
-void practice13_SOLIDPrinciple(){
+void practice13_SOLIDPrinciple() {
   /// SOLID Principles
 
   /// SRP 단일 책임 원칙 (Single responsibility principle) : 한 클래스는 하나의 책임만 가져야 한다.
@@ -889,7 +929,6 @@ void practice13_SOLIDPrinciple(){
   // repository.modify();
   // repository.remove();
 
-
   /// OCP 개방-폐쇄 원칙 (Open/closed principle) : “소프트웨어 요소는 확장에는 열려 있으나 변경에는 닫혀 있어야 한다.”
   /// Open for extension
   /// Closed for modification
@@ -903,7 +942,6 @@ void practice13_SOLIDPrinciple(){
   // String color = fruit.color;
   // print(color);
 
-
   /// LSP 리스코프 치환 원칙 (Liskov substitution principle) : “프로그램의 객체는 프로그램의 정확성을 깨뜨리지 않으면서 하위 타입의 인스턴스로 바꿀 수 있어야 한다.” 계약에 의한 설계를 참고하라.
   /// "Subtype should behave like a supertype."
   /// 상속받은 Subtype은 Supertype의 동작 의도대로 수행되어야 한다.
@@ -913,7 +951,6 @@ void practice13_SOLIDPrinciple(){
   // rectangular.height = 40;
   //
   // print(rectangular.width);
-
 
   /// ISP 인터페이스 분리 원칙 (Interface segregation principle) : “특정 클라이언트를 위한 인터페이스 여러 개가 범용 인터페이스 하나보다 낫다.”
   /// 쪼개야하는 인터페이스는 분리하자.
@@ -926,14 +963,12 @@ void practice13_SOLIDPrinciple(){
   // repo.save(todo);
   // repo.modify(todo);
 
-
   /// DIP 의존관계 역전 원칙 (Dependency inversion principle) : 프로그래머는 “추상화에 의존해야지, 구체화에 의존하면 안된다.” 의존성 주입은 이 원칙을 따르는 방법 중 하나다.
   /// 직접적인 참조 대신 Abstract 참조를 사용하라
 
   /// bin/solid/5_dip.dart
   final api = UserApi(ConsoleLogger());
   api.registerUser("홍길동", "abc123*");
-
 }
 
 void practice14_DesignPattern() {
@@ -951,7 +986,6 @@ void practice14_DesignPattern() {
   /// Design Pattern 추천 사이트
   /// https://github.com/kamranahmedse/design-patterns-for-humans
 
-
   /// Singleton Pattern
   /// 어플리케이션 개발 중 하나의 객체만 유지하고 싶을 경우 사용
   // final object1 = SingletonObject();
@@ -965,6 +999,7 @@ void practice14_DesignPattern() {
   // print(object3.count);
 
   SingletonObject objectFromAnotherWorld = SingletonObject.instance;
+
   /// Isolate에서 넘어온 Singleton 변수는 다른 Singleton 변수다.
   Isolate.run(() {
     final isolateObject = SingletonObject();
@@ -973,17 +1008,14 @@ void practice14_DesignPattern() {
     print(isolateObject == objectFromAnotherWorld);
   });
 
-
   /// Factory Pattern
   final FoodFactory factory = getFactory();
   final Food food = factory.createFood();
   print(food.createFlavor().taste);
 
-
   /// Command Pattern
   final Command selectedCommand = SaveCommand();
   selectedCommand.execute();
-
 
   /// Builder Pattern
   //final textWidget = TextWidgetBuilder('연습').setFontSize(14).setColor(Colors.blue).make();
