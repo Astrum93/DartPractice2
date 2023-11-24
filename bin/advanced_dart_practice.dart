@@ -3,6 +3,8 @@ import 'dart:collection';
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:math';
+import 'package:test/expect.dart';
+
 import 'design_pattern/builder_pattern.dart';
 import 'design_pattern/command_pattern.dart';
 import 'design_pattern/factory_pattern.dart';
@@ -692,38 +694,75 @@ void practice7_Stream() {
   // broadcastController.sink.add(100);
 
   /// Stream Error Handling
-  makeErrorStream(5).listen((event) {
-    print(event);
-  }).onError((e, trace) {
-    print(e.toString());
-  });
+  // makeErrorStream(5).listen((event) {
+  //   print(event);
+  // }).onError((e, trace) {
+  //   print(e.toString());
+  // });
 
   /// 에러 무시하고 싶을 때 yield*
-  makeErrorStream(5).listen((event) {
-    print(event);
-  }, cancelOnError: false).onError((e, trace) {
-    print(e.toString());
-  });
+  // makeErrorStream(5).listen((event) {
+  //   print(event);
+  // }, cancelOnError: false).onError((e, trace) {
+  //   print(e.toString());
+  // });
 }
 
 void practice8_Iterable() async {
   /// List와 Iterable
-  final List list = ['blue', 'yellow', 'red'];
-  // final iterator = list.iterator;
-  //
-  // print(iterator.current);
-  // while (iterator.moveNext()){
-  // print(iterator.current);
+  final List<String> list = ['a', 'b', 'c'];
+  final Set<String> set = {'1' '2' '3'};
+  final Map<String, String> map = {'1': 'a', '2': 'b', '3': 'c'};
+
+  // print(list.runtimeType);
+  // print(set.runtimeType);
+  // print(map.runtimeType);
+
+  final Iterable<String> iterableList = ['a', 'b', 'c'];
+  final Iterable<String> iterableSet = {'1' '2' '3'};
+  final Iterable<String> iterableMapKeys = map.keys;
+  final Iterable<String> iterableMapValues = map.values;
+  final Iterable<MapEntry<String, String>> iterableMapEntries = map.entries;
+
+  // print(iterableList.iterator);
+  // print(iterableSet.iterator);
+  // print(iterableMapKeys.iterator);
+  // print(iterableMapValues.iterator);
+  // print(iterableMapEntries.iterator);
+
+  final listIterator = list.iterator;
+  final setIterator = set.iterator;
+  final mapKeysIterator = map.keys.iterator;
+  final mapValuesIterator = map.values.iterator;
+  final mapEntriesIterator = map.entries.iterator;
+
+  //print(listIterator);
+  // print(setIterator);
+  // print(mapKeysIterator);
+  // print(mapValuesIterator);
+  // print(mapEntriesIterator);
+
+  // while (listIterator.moveNext()){
+  // print(listIterator.current);
   // };
 
-  /// iterable은 순서가 있는 객체
-  // list.forEach((element) {
-  //   print(element);
-  // });
+  /// Iterator 초기값 출력
+  final List colors = ['blue', 'yellow', 'red'];
+  // final colorsIterator = colors.iterator;
   //
-  // for(final color in list){
-  //   print(color);
-  // }
+  // print(colorsIterator.current);
+
+  /// iterable은 순서가 있는 객체
+
+  colors.forEach((element) {
+    print(element);
+  });
+
+  print(' ');
+
+  for (final color in colors) {
+    print(color);
+  }
 
   /// sync*로 Iterable 만들기
   // for (final message in makeIterable(5)){
@@ -737,9 +776,9 @@ void practice8_Iterable() async {
   //   print(message);
   // }
 
-  await for (final message in countStream2(3)) {
-    print(message);
-  }
+  // await for (final message in countStream2(3)) {
+  //   print(message);
+  // }
 }
 
 void practice9_Lambda() {
@@ -799,9 +838,9 @@ void practice10_Functional() async {
   //print(list);
 
   /// 함수형 프로그래밍 - 선언형 프로그래밍
-  //final nameList = getUserInfos().map((info) => info.name).toList();
-  //final nameList = getUserInfos().map(infoToName).toList();
-  //print(nameList);
+  // final nameList = getUserInfos().map((info) => info.name).toList();
+  // final nameList = getUserInfos().map(infoToName).toList();
+  // print(nameList);
 
   /// 기타 함수형 프로그래밍
   //runAll((value) => print(value), [1,2,3,4]);
@@ -1041,10 +1080,10 @@ main() {
   //practice6_Future();
 
   /// Stream practice
-  practice7_Stream();
+  // practice7_Stream();
 
   /// Iterable practice
-  //practice8_Iterable();
+  practice8_Iterable();
 
   /// Lamda practice
   //practice9_Lambda();
