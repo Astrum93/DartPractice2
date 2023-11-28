@@ -315,11 +315,12 @@ fxDart(List args) async {
 }
 
 ////////////////////////////////////////////////////////////////////////////
-
+/// Dart OOP
+/// 추상화
 abstract class Poketmon {
-  Poketmon(this.level);
-
   int level;
+
+  Poketmon(this.level);
 
   void attack() {
     print('공격!');
@@ -334,74 +335,71 @@ abstract mixin class Run {
   }
 }
 
-abstract interface class Fly {
-  // String wing = '';
-  String get wing;
-  set wing(String value);
-
-  Fly(String name) {
-    print('파닥파닥');
+abstract mixin class Eat {
+  void eat() {
+    print('냠냠 쩝쩝');
   }
 }
 
-abstract interface class MoreFastFly extends Fly {
-  MoreFastFly(super.name);
+abstract interface class Thunderbolt {
+  int skillLevel = 0;
+  // int get skillLevel;
+  // set skillLevel(int value);
 
-  void fastFly() {}
+  thunderBolt(int bolt) {
+    print('$bolt볼트 공격!!!!');
+  }
 }
 
-class Pikachu extends Poketmon with Run {
-  Pikachu(super.level);
+abstract interface class SuperThunderbolt extends Thunderbolt {
+  SuperThunderbolt();
 
+  void superThunderBolt() {
+    print('슈퍼 썬더 볼트~~~');
+  }
+}
+
+class Pikachu extends Poketmon with Run, Eat implements Thunderbolt {
+  Pikachu(super.level, this.skillLevel);
+
+  /// abstract class Poketmon의 attack()
   @override
   void attack() {
-    // TODO: implement attack
-    print('백만 볼트~!~!~!');
+    print('레벨 $level Pikachu가 공격 하였습니다.');
   }
 
-  // mixin class Run
-  @override
-  set leg(String _leg) {
-    // TODO: implement leg
-    super.leg = _leg;
-  }
-
+  /// abstract mixin class Run의 run()
   @override
   void run() {
-    // TODO: implement run
-    print('레벨$level Pikachu가 달립니다.');
+    print('레벨 $level Pikachu가 성공적으로 도망쳤습니다.');
+  }
+
+  /// abstract mixin class Eat의 eat()
+  @override
+  void eat() {
+    print('레벨 $level Pikachu가 밥을 냠냠쩝쩝 맛있게 먹습니다.');
+  }
+
+  /// abstract interface class의 인스턴스들
+  @override
+  int skillLevel;
+
+  @override
+  thunderBolt(int bolt) {
+    print('피카츄가 ${skillLevel}Lv $bolt만 볼트를 사용합니다.');
   }
 }
 
-class Mu extends Poketmon with Run implements MoreFastFly, Fly {
-  Mu(super.level, this.wing);
+/// 캡슐화
+class Human {
+  int _age;
 
-  @override
-  void attack() {
-    // TODO: implement attack
-    print('염력!');
-  }
+  Human(this._age);
 
-  @override
-  void run() {
-    // TODO: implement run
-    print('레벨$level MU가 달립니다.');
-  }
+  int get age => _age;
 
-  @override
-  String wing;
-
-  @override
-  void fastFly() {
-    // TODO: implement fastFly
-    print('매우 빠르게 날다');
-  }
-}
-
-void runRace(List<Run> list) {
-  for (final runner in list) {
-    runner.run();
-    //print(runner);
+  void addAge() {
+    _age++;
   }
 }
 
@@ -923,9 +921,11 @@ void practice12_DartOOP() {
   ///
   ///
 
-  // final mu = Mu(1, 'mu');
-  // print(mu.level);
-  // mu.fastFly();
+  // final pikachu = Pikachu(99,100);
+  // pikachu.attack();
+  // pikachu.run();
+  // pikachu.eat();
+  // pikachu.thunderBolt(100);
 
   /// 2. 상속 (Inheritance)
   ///  - Extends
@@ -934,16 +934,12 @@ void practice12_DartOOP() {
   ///  - override
   ///  - implement
 
-  // 첫 번째 방법
-  final mu = Mu(99, 'mu');
-  final pikachu = Pikachu(35);
-
-  runRace(<Run>[mu, pikachu]);
-
   /// 4. 캡슐화 (Encapsulation)
   ///  - private ( _ 언더스코어, 언더바)
   ///  - method
   ///  - get & set
+
+
 
   /// 5. KISS (Keep It Simple Stupid) :  "간단하게 유지하라 어리석게 하지 말고"
   /// 6. YAGNI (You Ain't Gonna Need It) : "너는 그것을 필요로 하지 않을 것이다."
@@ -1083,7 +1079,7 @@ main() {
   // practice7_Stream();
 
   /// Iterable practice
-  practice8_Iterable();
+  // practice8_Iterable();
 
   /// Lamda practice
   //practice9_Lambda();
@@ -1095,7 +1091,7 @@ main() {
   //practice11_DartCoreLib();
 
   /// Dart OOP practice
-  //practice12_DartOOP();
+  practice12_DartOOP();
 
   /// Dart SOLID Principle practice
   //practice13_SOLIDPrinciple();
