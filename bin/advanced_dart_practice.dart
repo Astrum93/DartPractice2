@@ -1035,9 +1035,15 @@ void practice13_SOLIDPrinciple() {
   /// bin/solid/3_lsp
   // Rectangular2 rectangular = getRectangular();
   // rectangular.height = 40;
-  //
+  
   // print(rectangular.width);
 
+  // Shape rectangle = Rectangle(5, 10);
+  // Shape triangle = Triangle(10, 5);
+  //
+  // printArea(rectangle);
+  // printArea(triangle);
+  
   /// ISP 인터페이스 분리 원칙 (Interface segregation principle) : “특정 클라이언트를 위한 인터페이스 여러 개가 범용 인터페이스 하나보다 낫다.”
   /// 쪼개야하는 인터페이스는 분리하자.
 
@@ -1055,6 +1061,10 @@ void practice13_SOLIDPrinciple() {
   /// bin/solid/5_dip.dart
   // final api = UserApi(ConsoleLogger());
   // api.registerUser("홍길동", "abc123*");
+
+  PaymentService paymentService = CreditCardPayment();
+  Order order = Order(paymentService);
+  order.checkout();
 }
 
 void practice14_DesignPattern() {

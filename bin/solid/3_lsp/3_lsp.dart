@@ -34,3 +34,43 @@ class Square extends Rectangular2 {
 }
 
 Rectangular2 getRectangular() => Square(10);
+
+///////////////////
+
+// 기반 클래스
+class Shape {
+
+  @nonVirtual
+  double area() {
+    return 0;
+  }
+}
+
+// 서브 클래스
+class Rectangle extends Shape {
+  double width;
+  double height;
+
+  Rectangle(this.width, this.height);
+
+  @override
+  double area() {
+    return width * height;
+  }
+}
+
+class Triangle extends Shape {
+  double base;
+  double height;
+
+  Triangle(this.base, this.height);
+
+  @override
+  double area() {
+    return (base * height) / 2;
+  }
+}
+
+void printArea(Shape shape) {
+  print('Area: ${shape.area()}');
+}

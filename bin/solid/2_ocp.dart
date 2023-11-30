@@ -1,9 +1,9 @@
 /// Class를 추가할 때
-abstract class Shape {
+abstract class Shape2 {
   double calculateArea();
 }
 
-class Rectangular extends Shape {
+class Rectangular extends Shape2 {
   double height;
   double width;
 
@@ -15,7 +15,7 @@ class Rectangular extends Shape {
   }
 }
 
-class Square extends Shape {
+class Square extends Shape2 {
   double side;
 
   Square(this.side);
@@ -26,11 +26,11 @@ class Square extends Shape {
   }
 }
 
-class Triangle extends Shape {
+class Triangle2 extends Shape2 {
   double height;
   double width;
 
-  Triangle(this.width, this.height);
+  Triangle2(this.width, this.height);
 
   @override
   double calculateArea() {

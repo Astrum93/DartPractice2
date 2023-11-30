@@ -1,37 +1,37 @@
 
-import '1_srp/todo_note.dart';
+import '1_srp/srp_practice.dart';
 
 abstract interface class CoreLocalRepositoryInterface {
-  void save(TodoNote note);
+  void save(UserContents contents);
 
-  void modify(TodoNote note);
+  void modify(UserContents contents);
 }
 
 abstract interface class LocalRepositoryInterface extends CoreLocalRepositoryInterface {
-  void sendLog(TodoNote note);
+  void sendLog(UserContents contents);
 
-  void retrySave(TodoNote note);
+  void retrySave(UserContents contents);
 }
 
 class Repo1 implements LocalRepositoryInterface {
   @override
-  void modify(TodoNote note) {}
+  void modify(UserContents contents) {}
 
   @override
-  void retrySave(TodoNote note) {}
+  void retrySave(UserContents contents) {}
 
   @override
-  void save(TodoNote note) {}
+  void save(UserContents contents) {}
 
   @override
-  void sendLog(TodoNote note) {}
+  void sendLog(UserContents contents) {}
 }
 
 class Repo2 implements CoreLocalRepositoryInterface {
   @override
-  void modify(TodoNote note) {}
+  void modify(UserContents contents) {}
 
   @override
-  void save(TodoNote note) {}
+  void save(UserContents contents) {}
 }
 
