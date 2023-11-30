@@ -52,3 +52,16 @@ enum Fruit {
 
   const Fruit(this.color);
 }
+
+
+
+setUserLevel() {
+  return UserLevel.User1;
+}
+
+enum UserLevel{
+  User1(100), User2(113), User3(52);
+
+  final int level;
+  const UserLevel(this.level);
+}

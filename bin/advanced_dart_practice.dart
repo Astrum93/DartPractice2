@@ -11,6 +11,7 @@ import 'design_pattern/factory_pattern.dart';
 import 'design_pattern/singleton_pattern.dart';
 import 'extention/collection_extention.dart';
 import 'solid/1_srp/local_repository.dart';
+import 'solid/1_srp/srp_practice.dart';
 import 'solid/1_srp/todo_note.dart';
 import 'solid/2_ocp.dart';
 import 'solid/3_lsp/3_lsp.dart';
@@ -389,6 +390,35 @@ class Pikachu extends Poketmon with Run, Eat implements Thunderbolt {
     print('피카츄가 ${skillLevel}Lv $bolt만 볼트를 사용합니다.');
   }
 }
+
+class Raichu extends Poketmon{
+  Raichu(super.level);
+
+  @override
+  void attack() {
+    print('Raichu 공격');
+  }
+}
+
+class Mew extends Poketmon{
+  Mew(super.level);
+
+  @override
+  void attack() {
+    print('Mew 공격');
+  }
+}
+
+class Lugia extends Poketmon{
+  Lugia(super.level);
+
+  @override
+  void attack() {
+    print('Lugia 공격');
+  }
+}
+
+
 
 /// 캡슐화
 class Human {
@@ -956,13 +986,21 @@ void practice13_SOLIDPrinciple() {
   ///  HOW? Class나 File의 이름을 보고 결정
 
   ///  bin/solid/1_srp
-  // final todo = TodoNote();
+  final todo = TodoNote();
   // final repository = LocalRepository();
   // todo.setContent('수학 과제', "p20 ~ p40를 공책에 작성");
-  //
+
   // repository.save(todo);
   // repository.modify();
   // repository.remove();
+
+  // final contents = UserContents();
+  // final repository = UserLocalRepository();
+  // contents.setContent('오늘 날씨 맑음', "오늘 날씨 진짜 좋다!!");
+  //
+  // repository.save(contents);
+  // repository.modify(contents);
+  // repository.remove(contents);
 
   /// OCP 개방-폐쇄 원칙 (Open/closed principle) : “소프트웨어 요소는 확장에는 열려 있으나 변경에는 닫혀 있어야 한다.”
   /// Open for extension
@@ -974,8 +1012,21 @@ void practice13_SOLIDPrinciple() {
   /// 1. Class를 추가할 때
   /// 2. Enum을 추가할 때
   // final Fruit fruit = getFruit();
+
   // String color = fruit.color;
   // print(color);
+
+  // final UserLevel userLevel = setUserLevel();
+  // int? level = userLevel.level;
+
+  // switch(userLevel) {
+  //   case UserLevel.User1 :
+  //     level = 100;
+  //   case UserLevel.User2 :
+  //     level = 112;
+  //   case UserLevel.User3 :
+  //     level = 29;
+  // }
 
   /// LSP 리스코프 치환 원칙 (Liskov substitution principle) : “프로그램의 객체는 프로그램의 정확성을 깨뜨리지 않으면서 하위 타입의 인스턴스로 바꿀 수 있어야 한다.” 계약에 의한 설계를 참고하라.
   /// "Subtype should behave like a supertype."
@@ -1002,8 +1053,8 @@ void practice13_SOLIDPrinciple() {
   /// 직접적인 참조 대신 Abstract 참조를 사용하라
 
   /// bin/solid/5_dip.dart
-  final api = UserApi(ConsoleLogger());
-  api.registerUser("홍길동", "abc123*");
+  // final api = UserApi(ConsoleLogger());
+  // api.registerUser("홍길동", "abc123*");
 }
 
 void practice14_DesignPattern() {
@@ -1091,10 +1142,10 @@ main() {
   //practice11_DartCoreLib();
 
   /// Dart OOP practice
-  practice12_DartOOP();
+  // practice12_DartOOP();
 
   /// Dart SOLID Principle practice
-  //practice13_SOLIDPrinciple();
+  practice13_SOLIDPrinciple();
 
   /// Dart Design Pattern practice
   //practice14_DesignPattern();
