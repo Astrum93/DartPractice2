@@ -1084,34 +1084,42 @@ void practice14_DesignPattern() {
 
   /// Singleton Pattern
   /// 어플리케이션 개발 중 하나의 객체만 유지하고 싶을 경우 사용
-  // final object1 = SingletonObject();
-  // object1.count = 100;
-  // final object2 = SingletonObject();
-  // final object3 = SingletonObject.instance;
+  // final obj1 = NormalObject();
+  // final obj2 = NormalObject();
+  // print(obj1.hashCode);
+  // print(obj2.hashCode);
   //
-  // // print(object1 == object2);
-  // // print(object2 == object3);
-  // // print(object1 == object3);
-  // print(object3.count);
+  // print(obj1 == obj2);
 
-  SingletonObject objectFromAnotherWorld = SingletonObject.instance;
+
+  final object1 = SingletonObject();
+  object1.count = 100;
+  final object2 = SingletonObject();
+  final object3 = SingletonObject.instance;
+
+  print(object1 == object2);
+  print(object2 == object3);
+  print(object1 == object3);
+  print(object3.count);
+
+  // SingletonObject objectFromAnotherWorld = SingletonObject.instance;
 
   /// Isolate에서 넘어온 Singleton 변수는 다른 Singleton 변수다.
-  Isolate.run(() {
-    final isolateObject = SingletonObject();
-    final isolateObject2 = SingletonObject();
-    print(isolateObject == isolateObject2);
-    print(isolateObject == objectFromAnotherWorld);
-  });
+  // Isolate.run(() {
+  //   final isolateObject = SingletonObject();
+  //   final isolateObject2 = SingletonObject();
+  //   print(isolateObject == isolateObject2);
+  //   print(isolateObject == objectFromAnotherWorld);
+  // });
 
   /// Factory Pattern
-  final FoodFactory factory = getFactory();
-  final Food food = factory.createFood();
-  print(food.createFlavor().taste);
+  // final FoodFactory factory = getFactory();
+  // final Food food = factory.createFood();
+  // print(food.createFlavor().taste);
 
   /// Command Pattern
-  final Command selectedCommand = SaveCommand();
-  selectedCommand.execute();
+  // final Command selectedCommand = SaveCommand();
+  // selectedCommand.execute();
 
   /// Builder Pattern
   //final textWidget = TextWidgetBuilder('연습').setFontSize(14).setColor(Colors.blue).make();
@@ -1155,8 +1163,8 @@ main() {
   // practice12_DartOOP();
 
   /// Dart SOLID Principle practice
-  practice13_SOLIDPrinciple();
+  // practice13_SOLIDPrinciple();
 
   /// Dart Design Pattern practice
-  //practice14_DesignPattern();
+  practice14_DesignPattern();
 }
