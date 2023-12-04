@@ -7,6 +7,7 @@ import 'package:test/expect.dart';
 
 import 'design_pattern/builder_pattern.dart';
 import 'design_pattern/command_pattern.dart';
+import 'design_pattern/factory_constructor.dart';
 import 'design_pattern/factory_pattern.dart';
 import 'design_pattern/singleton_pattern.dart';
 import 'extention/collection_extention.dart';
@@ -1092,15 +1093,15 @@ void practice14_DesignPattern() {
   // print(obj1 == obj2);
 
 
-  final object1 = SingletonObject();
-  object1.count = 100;
-  final object2 = SingletonObject();
-  final object3 = SingletonObject.instance;
-
-  print(object1 == object2);
-  print(object2 == object3);
-  print(object1 == object3);
-  print(object3.count);
+  // final object1 = SingletonObject();
+  // object1.count = 100;
+  // final object2 = SingletonObject();
+  // final object3 = SingletonObject.instance;
+  //
+  // print(object1 == object2);
+  // print(object2 == object3);
+  // print(object1 == object3);
+  // print(object3.count);
 
   // SingletonObject objectFromAnotherWorld = SingletonObject.instance;
 
@@ -1113,16 +1114,42 @@ void practice14_DesignPattern() {
   // });
 
   /// Factory Pattern
-  // final FoodFactory factory = getFactory();
-  // final Food food = factory.createFood();
-  // print(food.createFlavor().taste);
+  // final PokemonFactory factory = getFactory();
+  // final Pokemon pokemon = factory.createPokemon();
+  // print(pokemon.createPokemon().type);
+
+  /// factory Keyword
+  // final type = DigimonType.AgumonType;
+  // final digimonCreator = type.digimonCreator;
+  // final digimonWorld = digimonCreator("디지털 세계");
+  // print(digimonWorld);
+
+
+
 
   /// Command Pattern
-  // final Command selectedCommand = SaveCommand();
-  // selectedCommand.execute();
+  // final String selectedOption = 'save';
+  //
+  // switch (selectedOption) {
+  //   case 'save' :
+  //     // 저장 로직
+  //   case 'open' :
+  //     //  열기 로직
+  //   case 'copy' :
+  //   //  복사 로직
+  // }
+
+  final Command selectedCommand = SaveCommand();
+  selectedCommand.execute();
 
   /// Builder Pattern
-  //final textWidget = TextWidgetBuilder('연습').setFontSize(14).setColor(Colors.blue).make();
+
+  // final textWidget = TextWidgetBuilder('연습')
+  //   ..fontSize = 14
+  //   ..color = Colors.blue
+  //   ..make();
+
+  // final textWidget = TextWidgetBuilder('연습').setFontSize(14).setColor(Colors.blue).make();
 }
 
 main() {

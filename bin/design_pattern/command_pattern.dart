@@ -9,7 +9,7 @@ abstract interface class Command {
 class SaveCommand implements Command {
   @override
   void execute() {
-    // TODO: implement execute
+    print('Save의 execute 실행');
   }
 
   @override

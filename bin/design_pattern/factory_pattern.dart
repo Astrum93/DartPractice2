@@ -1,57 +1,57 @@
-abstract interface class Food<T extends Flavor> {
-  T createFlavor();
+abstract interface class Pokemon<T extends Type> {
+  T createPokemon();
 }
 
-class Chocolate extends Food {
+class FirePokemon extends Pokemon {
   @override
-  Flavor createFlavor() {
-    return Sweet();
+  Type createPokemon() {
+    return Fire();
   }
 }
 
-class LemonCandy extends Food {
+class ElectricPokemon extends Pokemon {
   @override
-  Flavor createFlavor() {
-    return Sour();
+  Type createPokemon() {
+    return Electric();
   }
 }
 
-class SpicyRamen extends Food {
+class WaterPokemon extends Pokemon {
   @override
-  Flavor createFlavor() {
-    return Spicy();
+  Type createPokemon() {
+    return Water();
   }
 }
 
-abstract interface class Flavor {
-  String get taste;
+abstract interface class Type {
+  String get type;
 }
 
-class Sour extends Flavor {
+class Electric extends Type {
   @override
-  String get taste => "sour";
+  String get type => "electric";
 }
 
-class Sweet extends Flavor {
+class Fire extends Type {
   @override
-  String get taste => "sweet";
+  String get type => "fire";
 }
 
-class Spicy extends Flavor {
+class Water extends Type {
   @override
-  String get taste => "spicy";
+  String get type => "water";
 }
 
-abstract interface class FoodFactory<T extends Food> {
-  T createFood();
+abstract interface class PokemonFactory<T extends Pokemon> {
+  T createPokemon();
 }
 
-class ChocolateFactory implements FoodFactory<Chocolate> {
+class FirePokemonFactory implements PokemonFactory<FirePokemon> {
   @override
-  Chocolate createFood() {
-    return Chocolate();
+  FirePokemon createPokemon() {
+    return FirePokemon();
   }
 }
 
 
-FoodFactory getFactory() => ChocolateFactory();
+PokemonFactory getFactory() => FirePokemonFactory();

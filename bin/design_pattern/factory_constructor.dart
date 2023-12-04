@@ -1,31 +1,27 @@
-abstract class Choco {}
+import 'package:test/expect.dart';
 
-class MilkChoco extends Choco {
-  MilkChoco(this.companyName);
+abstract class Digimon {}
 
-  final String companyName;
+class Agumon extends Digimon {
+  Agumon(this.worldName);
 
-  factory MilkChoco.creator(String companyName) => MilkChoco(companyName);
+  final String worldName;
+
+  factory Agumon.creator(String companyName) => Agumon(companyName);
 }
 
-class DarkChoco extends Choco {
-  DarkChoco();
+class Patamon extends Digimon {
+  Patamon();
 
-  factory DarkChoco.creator(String companyName) => DarkChoco();
+  factory Patamon.creator(String companyName) => Patamon();
 }
 
-enum ChocoType {
-  Milk(MilkChoco.creator),
-  Dark(DarkChoco.creator);
+enum DigimonType {
+  AgumonType(Agumon.creator),
+  PatamonType(Patamon.creator);
 
-  const ChocoType(this.chocoCreator);
+  const DigimonType(this.digimonCreator);
 
-  final Choco Function(String companyName) chocoCreator;
+  final Digimon Function(String companyName) digimonCreator;
 }
 
-main() {
-  final type = ChocoType.Milk;
-  final chocoCreator = type.chocoCreator;
-  final willyMilkChoco = chocoCreator("윌리웡카");
-  print(willyMilkChoco);
-}
